@@ -124,8 +124,30 @@ func main() {
 	// restful风格编码规范，推荐用DELETE方法，实际其实也可以用GET或者POST实现。
 	r.DELETE("/user/delete/:id", func(c *gin.Context) {
 		var data []List
+
+		// receive id
 		id := c.Param("id")
-        // https://www.bilibili.com/video/BV1fg411Z78A/?p=8&spm_id_from=pageDriver
+
+		// check whether the id exist
+		db.Where("id = ?", id).Find(&data)
+
+		// if id exist, delete it, else report err
+		if len(data) == 0 {
+			c.JSON(http.StatusOK, gin.H{
+				"msg":  "id is not exist",
+				"code": http.StatusNotFound,
+				"data": gin.H{},
+			})
+		} else {
+			// operate mysql to delete data item
+			// https://gorm.io/zh_CN/docs/delete.html  删除一条记录时，删除对象需要指定主键，否则会触发 批量删除
+
+			c.JSON(http.StatusOK, gin.H{
+				"msg":  "request success",
+				"code": http.StatusOK,
+				"data": gin.H{},
+			})
+		}
 
 	})
 
