@@ -140,7 +140,9 @@ func main() {
 			})
 		} else {
 			// operate mysql to delete data item
-			// https://gorm.io/zh_CN/docs/delete.html  删除一条记录时，删除对象需要指定主键，否则会触发 批量删除
+			// https://gorm.io/zh_CN/docs/delete.html  特别注意：删除一条记录时，删除对象需要指定主键，否则会触发 批量删除
+
+			db.Where("id = ?", id).Delete(&data)
 
 			c.JSON(http.StatusOK, gin.H{
 				"msg":  "request success",
@@ -158,7 +160,7 @@ func main() {
 		fmt.Println(id)
 	})
 
-	// edit data
+	// edit data   // todo 9 https://www.bilibili.com/video/BV1WS4y1t7Py
 	r.PUT("/")
 
 	// query data
