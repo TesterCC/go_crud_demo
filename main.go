@@ -123,16 +123,17 @@ func main() {
 	*/
 	// restful风格编码规范，推荐用DELETE方法，实际其实也可以用GET或者POST实现。
 	r.DELETE("/user/delete/:id", func(c *gin.Context) {
-		var data []List
+		var data List
 
 		// receive id
 		id := c.Param("id")
 
+		// delete core logic
 		// check whether the id exist
 		db.Where("id = ?", id).Find(&data)
 
 		// if id exist, delete it, else report err
-		if len(data) == 0 {
+		if data.ID == 0 {
 			c.JSON(http.StatusOK, gin.H{
 				"msg":  "id is not exist",
 				"code": http.StatusNotFound,
@@ -153,15 +154,70 @@ func main() {
 
 	})
 
-	// 另一种非restful风格得实现方式，用get实现删除的示例
+	// 另一种非restful风格得实现方式，有些项目会有要求，用get实现删除的示例
 	// http://xxx/user/delete?id=123
 	r.GET("/user/delete", func(c *gin.Context) {
 		id := c.Query("id")
-		fmt.Println(id)
+		fmt.Println("[D1] test get method delete: " + id)
+		fmt.Println(fmt.Sprintf("[D2] test get method delete: %s", id))
+		// todo delete core logic
 	})
 
 	// edit data   // todo 9 https://www.bilibili.com/video/BV1WS4y1t7Py
-	r.PUT("/")
+	r.PUT("/user/update/:id", func(c *gin.Context) {
+		// Attention data type
+		var data List
+
+		// receive id
+		id := c.Param("id")
+		fmt.Println("[D] id: " + id)
+		// update core logic
+
+		// 1.找到对应的id所对应的条目
+		// 2.判断id是否存在
+		// 3.修改对应条目
+		// 4.返回id，提示没有找到
+
+		db.Select("id").Where("id=?", id).Find(&data) // not recommend
+		//db.Where("id = ?", id).Find(&data)
+
+		if data.ID == 0 {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"msg":  "can't find user id",
+				"data": gin.H{},
+				"code": http.StatusBadRequest,
+			})
+		} else {
+			// validate args
+			err := c.ShouldBindJSON(&data)
+			//fmt.Println(err)
+			//fmt.Println(data)
+			//fmt.Println(&data)
+
+			if err != nil {
+				c.JSON(http.StatusBadRequest, gin.H{
+					"msg":  "update failed",
+					"data": err.Error(), // print err info
+					"code": http.StatusBadRequest,
+				})
+			} else {
+				// db update database info
+				// Get updated records count with `RowsAffected`
+				db.Where("id = ?", id).Updates(&data)
+
+				//result.RowsAffected // returns updated records count
+				//result.Error        // returns updating error
+
+				c.JSON(http.StatusOK, gin.H{
+					"msg":  "update success",
+					"data": gin.H{},
+					"code": http.StatusOK,
+				})
+			}
+
+		}
+
+	})
 
 	// query data
 	r.GET("")
