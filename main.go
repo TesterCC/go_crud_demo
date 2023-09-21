@@ -163,7 +163,7 @@ func main() {
 		// todo delete core logic
 	})
 
-	// edit data   // todo 9 https://www.bilibili.com/video/BV1WS4y1t7Py
+	// edit data   // todo 11 https://www.bilibili.com/video/BV1GB4y1h7mz
 	r.PUT("/user/update/:id", func(c *gin.Context) {
 		// Attention data type
 		var data List
@@ -178,10 +178,10 @@ func main() {
 		// 3.修改对应条目
 		// 4.返回id，提示没有找到
 
-		db.Select("id").Where("id=?", id).Find(&data) // not recommend
-		//db.Where("id = ?", id).Find(&data)
+		db.Select("id").Where("id=?", id).Find(&data)
 
 		if data.ID == 0 {
+			// Attention: gorm做的是虚拟删除 deleted_at
 			c.JSON(http.StatusBadRequest, gin.H{
 				"msg":  "can't find user id",
 				"data": gin.H{},
@@ -219,8 +219,38 @@ func main() {
 
 	})
 
-	// query data
-	r.GET("")
+	// query data (1.条件查询，2.全部查询/分页查询)
+	r.GET("/user/list/:name", func(c *gin.Context) {
+		// 获取路径参数
+		name := c.Param("name")
+
+		var dataList []List
+
+		// 查询数据库
+		db.Where("name = ?", name).Find(&dataList)
+
+		/*
+			只返回指定字段信息的查询方式
+			var dataList []YourModel
+			db.Select("id, name, state, phone, email, address").Find(&dataList)
+		*/
+
+		// 判断是否查询到数据
+		if len(dataList) == 0 {
+			c.JSON(http.StatusOK, gin.H{
+				"msg":  "no data",
+				"code": http.StatusBadRequest,
+				"data": gin.H{},
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"msg":  "request success",
+				"code": http.StatusOK,
+				"data": dataList,
+			})
+		}
+
+	})
 
 	r.Run(":" + PORT)
 
