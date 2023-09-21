@@ -1,0 +1,414 @@
+{
+	"info": {
+		"_postman_id": "81ef7691-5556-4493-868e-5a0bb1567938",
+		"name": "go_crud_demo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "163474"
+	},
+	"item": [
+		{
+			"name": "user/list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/user/list/David",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"user",
+						"list",
+						"David"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user/delete get_delete_by_id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/user/delete?id=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"user",
+						"delete"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user/delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/user/delete/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"user",
+						"delete",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user/add",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"Alan\",\r\n    \"state\": \"online\",\r\n    \"phone\": \"13111111111\",\r\n    \"email\": \"alan@test.com\",\r\n    \"address\": \"China, Guangzhou Province, Shenzhen, Nanshan\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/user/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"user",
+						"add"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "testcase1",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Alan\",\r\n    \"state\": \"online\",\r\n    \"phone\": \"13111111111\",\r\n    \"email\": \"alan@test.com\",\r\n    \"address\": \"China, Guangzhou Province, Shenzhen, Nanshan\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/user/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"user",
+								"add"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "testcase2",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Bob\",\r\n    \"state\": \"offline\",\r\n    \"phone\": \"15222222222\",\r\n    \"email\": \"bob@test.com\",\r\n    \"address\": \"China, Zhejiang Province, Ningbo\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/user/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"user",
+								"add"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "testcase3",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Bob\",\r\n    \"state\": \"offline\",\r\n    \"phone\": \"15222222222\",\r\n    \"email\": \"bob@test.com\",\r\n    \"address\": \"China, Zhejiang Province, Ningbo\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/user/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"user",
+								"add"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "testcase4",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"David\",\r\n    \"state\": \"online\",\r\n    \"phone\": \"17933334444\",\r\n    \"email\": \"David@test.com\",\r\n    \"address\": \"USA Washington DC\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/user/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"user",
+								"add"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "testcase4-2",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"David\",\r\n    \"state\": \"online\",\r\n    \"phone\": \"17933334444\",\r\n    \"email\": \"David@test.com\",\r\n    \"address\": \"USA Washington DC\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/user/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"user",
+								"add"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "user/update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"Chris223\",\r\n    \"state\": \"offline\",\r\n    \"phone\": \"17333333333\",\r\n    \"email\": \"christina222@test.com\",\r\n    \"address\": \"China, Sichuan Province, Chengdu\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/user/update/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"user",
+						"update",
+						"3"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "testcase1",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Alan\",\r\n    \"state\": \"online\",\r\n    \"phone\": \"13111111111\",\r\n    \"email\": \"alan@test.com\",\r\n    \"address\": \"China, Guangzhou Province, Shenzhen, Nanshan\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/user/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"user",
+								"add"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "testcase2",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Bob\",\r\n    \"state\": \"offline\",\r\n    \"phone\": \"15222222222\",\r\n    \"email\": \"bob@test.com\",\r\n    \"address\": \"China, Zhejiang Province, Ningbo\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/user/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"user",
+								"add"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "testcase3",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Bob\",\r\n    \"state\": \"offline\",\r\n    \"phone\": \"15222222222\",\r\n    \"email\": \"bob@test.com\",\r\n    \"address\": \"China, Zhejiang Province, Ningbo\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/user/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"user",
+								"add"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "test",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/test",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"test"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
