@@ -13,7 +13,7 @@ import (
 func main() {
 	// 参考 https://github.com/go-sql-driver/mysql#dsn-data-source-name 获取详情
 	//dsn := "user:pass@tcp(127.0.0.1:3306)/dbname?charset=utf8mb4&parseTime=True&loc=Local"
-	dsn := "root:PenTest123@tcp(192.168.80.129:3306)/crud_list?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "root:PenTest123@tcp(127.0.0.1:3306)/crud_list?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
 		NamingStrategy: schema.NamingStrategy{
 			// 解决插入表的时候会自动添加复数的问题，如：user变成users
@@ -221,6 +221,7 @@ func main() {
 
 	// query data (1.条件查询，2.全部查询/分页查询)
 	r.GET("/user/list/:name", func(c *gin.Context) {
+		// 1.条件查询
 		// 获取路径参数
 		name := c.Param("name")
 
@@ -251,6 +252,26 @@ func main() {
 		}
 
 	})
+
+	r.GET("/user/list", func(c *gin.Context) {
+		var dataList []List
+		// 2.查询全部数据， 查询分页数据
+		//pageSize := c.Query("pageSize")
+		//pageNum := c.Query("pageNum")
+
+		// 返回一个总数
+		var total int64
+		// 查询数据库   // Limit -1 , get all data
+		db.Model(dataList).Count(&total).Limit(-1).Offset(-1).Find(&dataList)
+
+		if len(dataList) == 0 {
+			c.JSON(http.StatusOK, gin.H{
+
+			})
+		}
+
+	})
+
 
 	r.Run(":" + PORT)
 
