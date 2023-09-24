@@ -266,10 +266,19 @@ func main() {
 
 		if len(dataList) == 0 {
 			c.JSON(http.StatusOK, gin.H{
+				"msg": "no data",
+				"code": http.StatusBadRequest,
+				"data": gin.H{},
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				// logic
 
+				"msg": "request success",
+				"code": http.StatusOK,
+				"data": gin.H{},
 			})
 		}
-
 	})
 
 
