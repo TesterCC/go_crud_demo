@@ -7,6 +7,7 @@ import (
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"
 	"net/http"
+	"strconv"
 	"time"
 )
 
@@ -159,7 +160,7 @@ func main() {
 	r.GET("/user/delete", func(c *gin.Context) {
 		id := c.Query("id")
 		fmt.Println("[D1] test get method delete: " + id)
-		fmt.Println(fmt.Sprintf("[D2] test get method delete: %s", id))
+		fmt.Sprintf("[D2] test get method delete id: %s\n", id)
 		// todo delete core logic
 	})
 
@@ -256,30 +257,45 @@ func main() {
 	r.GET("/user/list", func(c *gin.Context) {
 		var dataList []List
 		// 2.查询全部数据， 查询分页数据
-		//pageSize := c.Query("pageSize")
-		//pageNum := c.Query("pageNum")
+		pageSize, _ := strconv.Atoi(c.Query("pageSize")) // str to int
+		pageNum, _ := strconv.Atoi(c.Query("pageNum"))
+
+		fmt.Printf("[D] page size: %d, page num: %d", pageSize, pageNum) // debug
 
 		// 返回一个总数
 		var total int64
 		// 查询数据库   // Limit -1 , get all data
-		db.Model(dataList).Count(&total).Limit(-1).Offset(-1).Find(&dataList)
+		//db.Model(dataList).Count(&total).Limit(-1).Offset(-1).Find(&dataList)
+
+		// get all records count
+		//db.Model(dataList).Count(&total)
+
+		// offset
+		offset := (pageNum - 1) * pageSize
+
+		// execute paging query
+		db.Model(dataList).Count(&total).Limit(pageSize).Offset(offset).Find(&dataList)
 
 		if len(dataList) == 0 {
 			c.JSON(http.StatusOK, gin.H{
-				"msg": "no data",
+				"msg":  "no data",
 				"code": http.StatusBadRequest,
 				"data": gin.H{},
 			})
 		} else {
 			c.JSON(http.StatusOK, gin.H{
 				// logic
-				"msg": "request success",
+				"msg":  "request success",
 				"code": http.StatusOK,
-				"data": gin.H{},
+				"data": gin.H{
+					"list":     dataList,
+					"total":    total,
+					"pageNum":  pageNum,
+					"pageSize": pageSize,
+				},
 			})
 		}
 	})
-
 
 	r.Run(":" + PORT)
 

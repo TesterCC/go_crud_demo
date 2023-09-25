@@ -1,5 +1,3 @@
-# Todo
+## Environment
 
-11 get all data and pagination
-
-https://www.bilibili.com/video/BV1GB4y1h7mz
+go + gin + mysql5.7/8.0 
