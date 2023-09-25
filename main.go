@@ -13,7 +13,7 @@ import (
 func main() {
 	// 参考 https://github.com/go-sql-driver/mysql#dsn-data-source-name 获取详情
 	//dsn := "user:pass@tcp(127.0.0.1:3306)/dbname?charset=utf8mb4&parseTime=True&loc=Local"
-	dsn := "root:PenTest123@tcp(127.0.0.1:3306)/crud_list?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "root:PenTest123@tcp(192.168.80.129:3306)/crud_list?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
 		NamingStrategy: schema.NamingStrategy{
 			// 解决插入表的时候会自动添加复数的问题，如：user变成users
@@ -273,7 +273,6 @@ func main() {
 		} else {
 			c.JSON(http.StatusOK, gin.H{
 				// logic
-
 				"msg": "request success",
 				"code": http.StatusOK,
 				"data": gin.H{},
