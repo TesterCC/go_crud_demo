@@ -22,8 +22,8 @@ func main() {
 		},
 	})
 
-	fmt.Println(db)
-	fmt.Println(err)
+	//fmt.Println(db)
+	fmt.Println("[D] init db error info: ", err)
 
 	sqlDB, err := db.DB()
 
