@@ -7,7 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "user/list",
+			"name": "user/list/condition",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -22,6 +22,26 @@
 						"user",
 						"list",
 						"David"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user/list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/user/list",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"user",
+						"list"
 					]
 				}
 			},
@@ -237,6 +257,134 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"David\",\r\n    \"state\": \"online\",\r\n    \"phone\": \"18551850082\",\r\n    \"email\": \"David82@test.com\",\r\n    \"address\": \"Singapore, Ubi Tech Park\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/user/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"user",
+								"add"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "testcase4-2 Copy",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Eric\",\r\n    \"state\": \"online\",\r\n    \"phone\": \"17839939993\",\r\n    \"email\": \"David@test.com\",\r\n    \"address\": \"UK\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/user/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"user",
+								"add"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "testcase6",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Fred\",\r\n    \"state\": \"online\",\r\n    \"phone\": \"18939909923\",\r\n    \"email\": \"Fred2@testing.com\",\r\n    \"address\": \"Yunnan, Dali\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/user/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"user",
+								"add"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "testcase7",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"George\",\r\n    \"state\": \"online\",\r\n    \"phone\": \"13223332933\",\r\n    \"email\": \"George@test.com\",\r\n    \"address\": \"UK, London\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/user/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"user",
+								"add"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "testcase7-2 test",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
 							"raw": "{\r\n    \"name\":\"David\",\r\n    \"state\": \"online\",\r\n    \"phone\": \"17933334444\",\r\n    \"email\": \"David@test.com\",\r\n    \"address\": \"USA Washington DC\"\r\n}",
 							"options": {
 								"raw": {
@@ -405,6 +553,32 @@
 					"port": "3001",
 					"path": [
 						"test"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "download",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/user/download?id=7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"user",
+						"download"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "7"
+						}
 					]
 				}
 			},
