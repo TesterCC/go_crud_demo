@@ -6,7 +6,9 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"
+	"io"
 	"net/http"
+	"os"
 	"strconv"
 	"time"
 )
@@ -294,6 +296,33 @@ func main() {
 					"pageSize": pageSize,
 				},
 			})
+		}
+	})
+
+    // for test vue download file code
+	r.GET("/user/download", func(c *gin.Context) {
+		tid, _ := strconv.Atoi(c.Query("id")) // str to int
+		if tid != 7 {
+			return
+		}
+		// 读取文件a.json的内容
+		filePath := "./static/data.json"
+		file, err := os.Open(filePath)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+		defer file.Close()
+
+		// 设置响应头，指定文件名为b.json   // setting same to python3
+		c.Header("Content-Disposition", "attachment; filename=b.json")
+		c.Data(http.StatusOK, "application/json", nil)
+
+		// 将文件内容写入响应体
+		_, err = io.Copy(c.Writer, file)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
 		}
 	})
 
