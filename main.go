@@ -314,8 +314,14 @@ func main() {
 		}
 		defer file.Close()
 
+		// 获取当前时间戳
+		timestamp := time.Now().Unix()
+
+		// 构造文件名，以时间戳为名称
+		filename := strconv.FormatInt(timestamp, 10) + ".json"
+
 		// 设置响应头，指定文件名为b.json   // setting same to python3
-		c.Header("Content-Disposition", "attachment; filename=b.json")
+		c.Header("Content-Disposition", "attachment; filename="+filename)
 		c.Data(http.StatusOK, "application/json", nil)
 
 		// 将文件内容写入响应体
