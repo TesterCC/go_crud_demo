@@ -16,6 +16,7 @@ import (
 func main() {
 	// 参考 https://github.com/go-sql-driver/mysql#dsn-data-source-name 获取详情
 	//dsn := "user:pass@tcp(127.0.0.1:3306)/dbname?charset=utf8mb4&parseTime=True&loc=Local"
+	// 测试数据库在服务器
 	dsn := "root:PenTest123@tcp(192.168.80.129:3306)/crud_list?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
 		NamingStrategy: schema.NamingStrategy{
@@ -302,34 +303,62 @@ func main() {
     // for test vue download file code
 	r.GET("/user/download", func(c *gin.Context) {
 		tid, _ := strconv.Atoi(c.Query("id")) // str to int
-		if tid != 7 {
-			return
+
+		if tid == 1 {
+			// 读取文件data.json的内容
+			filePath := "./static/data.json"
+			file, err := os.Open(filePath)
+			if err != nil {
+				c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+				return
+			}
+			defer file.Close()
+
+			// 获取当前时间戳
+			timestamp := time.Now().Unix()
+
+			// 构造文件名，以时间戳为名称
+			filename := strconv.FormatInt(timestamp, 10) + ".json"
+
+			// 设置响应头，指定文件名为b.json   // setting same to python3
+			c.Header("Content-Disposition", "attachment; filename="+filename)
+			c.Data(http.StatusOK, "application/json", nil)
+			// 将文件内容写入响应体
+			_, err = io.Copy(c.Writer, file)
+			if err != nil {
+				c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+				return
+			}
 		}
-		// 读取文件a.json的内容
-		filePath := "./static/data.json"
-		file, err := os.Open(filePath)
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-			return
+
+		if tid == 7 {
+			// read
+			filePath := "./static/data.7z"
+			file, err := os.Open(filePath)
+			if err != nil {
+				c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+				return
+			}
+			defer file.Close()
+
+			// 获取当前时间戳
+			timestamp := time.Now().Unix()
+
+			// 构造文件名，以时间戳为名称
+			filename := strconv.FormatInt(timestamp, 10) + ".7z"
+
+			// 设置响应头，指定文件名为data.7z   // setting same to python3
+			c.Header("Content-Disposition", "attachment; filename="+filename)
+			c.Data(http.StatusOK, "application/x-7z-compressed", nil)
+
+			// 将文件内容写入响应体
+			_, err = io.Copy(c.Writer, file)
+			if err != nil {
+				c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+				return
+			}
 		}
-		defer file.Close()
 
-		// 获取当前时间戳
-		timestamp := time.Now().Unix()
-
-		// 构造文件名，以时间戳为名称
-		filename := strconv.FormatInt(timestamp, 10) + ".json"
-
-		// 设置响应头，指定文件名为b.json   // setting same to python3
-		c.Header("Content-Disposition", "attachment; filename="+filename)
-		c.Data(http.StatusOK, "application/json", nil)
-
-		// 将文件内容写入响应体
-		_, err = io.Copy(c.Writer, file)
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-			return
-		}
 	})
 
 	r.Run(":" + PORT)
