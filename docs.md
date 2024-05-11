@@ -8,6 +8,8 @@ go + gin + mysql5.7/8.0
 ```
 local debug:
 ~/ws_vuejs/vue3-demo
+
+npm run dev
 ```
 
 ## Build Binary
