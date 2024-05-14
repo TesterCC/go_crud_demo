@@ -15,13 +15,13 @@ npm run dev
 ## Build Binary
 
 ```
-go build -o crud_demo
-./crud_demo
+go build -o go_crud_demo
+./v
 ```
 
 cross compiling
 ```shell
-// 交叉编译+减少文件大小
+// 交叉编译+减少文件大小, linux amd64
 GOOS="linux" GOARCH="amd64" go build -o go_crud_demo -ldflags "-w -s" main.go
 ```
 

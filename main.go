@@ -3,12 +3,11 @@ package main
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"go_crud_demo/router"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"
-	"io"
 	"net/http"
-	"os"
 	"strconv"
 	"time"
 )
@@ -73,9 +72,10 @@ func main() {
 
 	// write interface
 	PORT := "3001"
-	r := gin.Default()
+	//r := gin.Default()
+	r := router.Router()  // need comment, r := gin.Default()
 
-	// TEST
+	// TEST WORKING
 	r.GET("/test", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			//"message": "pong",
@@ -83,6 +83,7 @@ func main() {
 		})
 	})
 
+	// 20240514 todo migrate to router and controller
 	/*业务代码约定
 	request success: 200
 	request failed: 400
@@ -298,96 +299,6 @@ func main() {
 				},
 			})
 		}
-	})
-
-	// for test vue download file code
-	r.GET("/user/download", func(c *gin.Context) {
-		tid, _ := strconv.Atoi(c.Query("id")) // str to int
-
-		if tid == 1 {
-			// 读取文件data.json的内容
-			filePath := "./static/data.json"
-			file, err := os.Open(filePath)
-			if err != nil {
-				c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-				return
-			}
-			defer file.Close()
-
-			// 获取当前时间戳
-			timestamp := time.Now().Unix()
-
-			// 构造文件名，以时间戳为名称
-			filename := strconv.FormatInt(timestamp, 10) + ".json"
-
-			// 设置响应头，指定文件名为b.json   // setting same to python3
-			c.Header("Content-Disposition", "attachment; filename="+filename)
-			c.Data(http.StatusOK, "application/json", nil)
-			// 将文件内容写入响应体
-			_, err = io.Copy(c.Writer, file)
-			if err != nil {
-				c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-				return
-			}
-		}
-
-		if tid == 7 {
-			// read
-			filePath := "./static/data.7z"
-			file, err := os.Open(filePath)
-			if err != nil {
-				c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-				return
-			}
-			defer file.Close()
-
-			// 获取当前时间戳
-			timestamp := time.Now().Unix()
-
-			// 构造文件名，以时间戳为名称
-			filename := strconv.FormatInt(timestamp, 10) + ".7z"
-
-			// 设置响应头，指定文件名为data.7z   // setting same to python3
-			c.Header("Content-Disposition", "attachment; filename="+filename)
-			c.Data(http.StatusOK, "application/x-7z-compressed", nil)
-
-			// 将文件内容写入响应体
-			_, err = io.Copy(c.Writer, file)
-			if err != nil {
-				c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-				return
-			}
-		}
-
-	})
-
-	// 20240514 add upload api
-	r.POST("/user/upload", func(c *gin.Context) {
-		// parse upload file
-		file, err := c.FormFile("file")    // post form data key: file
-		if err != nil {
-			// handle error
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-			return
-		}
-		// handle upload file
-		// generate file path
-		filePath := "./upload/" + file.Filename
-
-		// save file to local specific path
-		if err = c.SaveUploadedFile(file, filePath); err != nil {
-			// handle save file error
-			c.JSON(http.StatusInternalServerError, gin.H{"erorr": err.Error()})
-			return
-		}
-
-		// save file success
-		// 处理逻辑
-		c.JSON(http.StatusOK, gin.H{
-			"msg":       "upload file success",
-			"file_name": file.Filename,
-			"file_path": filePath,
-		})
 	})
 
 	// standalone launch
