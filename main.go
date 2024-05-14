@@ -300,7 +300,7 @@ func main() {
 		}
 	})
 
-    // for test vue download file code
+	// for test vue download file code
 	r.GET("/user/download", func(c *gin.Context) {
 		tid, _ := strconv.Atoi(c.Query("id")) // str to int
 
@@ -360,6 +360,37 @@ func main() {
 		}
 
 	})
+
+	// 20240514 add upload api
+	r.POST("/user/upload", func(c *gin.Context) {
+		// parse upload file
+		file, err := c.FormFile("file")    // post form data key: file
+		if err != nil {
+			// handle error
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+		// handle upload file
+		// generate file path
+		filePath := "./upload/" + file.Filename
+
+		// save file to local specific path
+		if err = c.SaveUploadedFile(file, filePath); err != nil {
+			// handle save file error
+			c.JSON(http.StatusInternalServerError, gin.H{"erorr": err.Error()})
+			return
+		}
+
+		// save file success
+		// 处理逻辑
+		c.JSON(http.StatusOK, gin.H{
+			"msg":       "upload file success",
+			"file_name": file.Filename,
+			"file_path": filePath,
+		})
+	})
+
+	// standalone launch
 
 	r.Run(":" + PORT)
 
