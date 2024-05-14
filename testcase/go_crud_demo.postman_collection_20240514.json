@@ -413,7 +413,7 @@
 			]
 		},
 		{
-			"name": "user/add Copy",
+			"name": "user/upload",
 			"request": {
 				"method": "POST",
 				"header": [],
